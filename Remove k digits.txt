@@ -1,0 +1,33 @@
+class Solution {
+    public String removeKdigits(String num, int k) {
+        // use stack of characters
+        // check if the current digit is smaller than the stack peek, pop stack peek and push the current element , if k > 0 and stack is not empty
+        // if k > 0 
+    // then stack pop till 0 k--
+    // take boolean for leading zeros
+    Stack<Character> st = new Stack<>();
+    for( char ch : num.toCharArray()){
+        while(!st.isEmpty() && k > 0 && st.peek() > ch){
+            st.pop();
+            k--;
+        }
+        st.push(ch);
+    }
+    // when k is left after processing everything
+    while( k > 0){
+        st.pop();
+        k--;
+    }
+    StringBuilder ans = new StringBuilder();
+    // leading zero
+    boolean zero = true;
+    for( char c : st ){
+        if( c == '0' && zero ){
+            continue;
+        }
+        zero = false;
+        ans.append(c);
+    }
+    return  ans.length() == 0 ? "0" : ans.toString();
+    }
+}
